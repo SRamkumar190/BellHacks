@@ -1,0 +1,32 @@
+from flask import Flask, request, jsonify
+
+app = Flask(_ _name_ _) 
+
+# Storage for simplicity (under a database) 
+
+friends_data = {}
+
+@app.route('/add_friend', methods = ['POST'])
+def add_friend():
+    data = request.get.json()
+    user_id = data['user_id']
+    friend_id = data['friend_id']
+
+    if user_id not in friends_data:
+          friends_data[user_id] = []
+
+    friends_data[user_id].append(friend_id)
+    return jsonify({'message': 'Friend added successfully'})
+
+@app.route('/get_friends', methods = ['GET'])
+def get_friends():
+  user_id = request.args.get('user_id')
+
+    if user_id in friends_data:
+      return jsonify({'friends': friends_data[user_id]})
+    else: 
+      return jsonify({'friends': []})
+
+if _ _name_ _ == ' _ _main_ _ ':
+    app.run(debug = True)
+    

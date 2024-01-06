@@ -1,0 +1,27 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+# In-memory storage for simplicity (consider using a database)
+feed_data = [
+    {'id': 1, 'title': 'Post 1', 'content': 'This is the content of post 1.'},
+    {'id': 2, 'title': 'Post 2', 'content': 'This is the content of post 2.'},
+    # Add more sample data as needed
+]
+
+blog_data = [
+    {'id': 1, 'title': 'Blog Post 1', 'content': 'This is the content of blog post 1.'},
+    {'id': 2, 'title': 'Blog Post 2', 'content': 'This is the content of blog post 2.'},
+    # Add more sample data as needed
+]
+
+@app.route('/feed')
+def feed():
+    return render_template('feed.html', feed_data=feed_data)
+
+@app.route('/blog_feed')
+def blog_feed():
+    return render_template('blog_feed.html', blog_data=blog_data)
+
+if __name__ == '__main__':
+    app.run(debug=True)

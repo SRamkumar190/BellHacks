@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+import random
 
 app = Flask(__name__)
 
@@ -15,13 +16,30 @@ blog_data = [
     # Add more sample data as needed
 ]
 
+@app.route('/')
+def main_page():
+    return render_template('main_page.html')
+
 @app.route('/feed')
 def feed():
     return render_template('feed.html', feed_data=feed_data)
 
 @app.route('/blog_feed')
 def blog_feed():
+    # Shuffle blog data for randomness
+    random.shuffle(blog_data)
     return render_template('blog_feed.html', blog_data=blog_data)
+
+@app.route('/create_blog', methods=['POST'])
+def create_blog():
+    data = request.form
+    new_blog = {
+        'id': len(blog_data) + 1,
+        'title': data['title'],
+        'content': data['content']
+    }
+    blog_data.append(new_blog)
+    return redirect(url_for('main_page'))
 
 if __name__ == '__main__':
     app.run(debug=True)
